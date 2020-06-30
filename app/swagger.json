@@ -1,0 +1,417 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Indian Premier League",
+      "description": "Node.js Application API to view IPL stats",
+      "license": {
+        "name": "MIT"
+      }
+    },
+    "host": "localhost:3000",
+    "basePath": "/api/v1",
+    "tags": [
+      {
+        "name": "Users",
+        "description": "API for users in the system"
+      },
+      {
+        "name": "Matches",
+        "description": "API for cricket matches in the system"
+      }
+    ],
+    "schemes": [
+      "http"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/users/signup": {
+        "post": {
+          "tags": [
+            "Users"
+          ],
+          "security": [],
+          "description": "Create new user in system",
+          "parameters": [
+            {
+              "name": "Payload",
+              "required": true,
+              "in": "body",
+              "description": "user data to to create user in the system",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "New user is created"
+            },
+            "400": {
+                "description": "Invalid request payload"
+            },
+            "409": {
+                "description": "User already exists or business validation failed"
+            },
+            "500": {
+                "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/users/login": {
+        "post": { 
+            "tags": [
+                "Users"
+              ],
+            "security": [], 
+            "parameters": [
+                {
+                  "name": "Payload",
+                  "in": "body",
+                  "description": "Payload to login",
+                  "schema": {
+                    "$ref": "#/components/schemas/loginRequest"
+                  }
+                }
+            ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "User logged in successfully"
+            },
+            "400": {
+                "description": "Invalid request payload"
+            },
+            "401": {
+                "description": "Invalid credentials"
+            },
+            "500": {
+                "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/users/logout": {
+        "post": { 
+            "tags": [
+                "Users"
+              ],
+          "produces": [
+            "application/json"
+          ],
+          "security": {
+            "cookieAuth": []
+          },
+          "responses": {
+            "200": {
+              "description": "user logged out successfully"
+            },
+            "400": {
+                "description": "Invalid request payload"
+            },
+            "401": {
+                "description": "Authentication failed"
+            },
+            "500": {
+                "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/matches/{matchId}": {
+        "get": {
+          "tags": [
+            "Matches"
+          ],
+          "description": "Fetch a match for the match id",
+          "security": {
+            "cookieAuth": []
+          },
+          "parameters": [
+            {
+              "name": "matchId",
+              "in": "path",
+              "required": true,
+              "description": "matchId for which the match data needs to be fetched",
+              "type": "string"
+            }
+         ],
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Match fetched successfully"
+            },
+            "401": {
+                "description": "Authentication failed"
+            },
+            "404": {
+                "description": "No match found for the matchId"
+            },
+            "500": {
+                "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/matches?team_name=Mumbai Indians": {
+        "get": {
+          "tags": [
+            "Matches"
+          ],
+          "description": "Fetch a all the matches for the specified team",
+          "security": {
+            "cookieAuth": []
+          },
+          "parameters": [
+            {
+              "name": "team_name",
+              "in": "query",
+              "required": true,
+              "description":"valid team_name for which the matches needs to be fetched",
+              "type": "string"
+            }
+         ],
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Matches fetched successfully"
+            },
+            "401": {
+                "description": "Authentication failed"
+            },
+            "404": {
+                "description": "No matches found for the team_name"
+            },
+            "500": {
+                "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/matches/predict": {
+        "post": {
+          "tags": [
+            "Matches"
+          ],
+          "description": "Predict the win percentage between two teams based previous stats",
+          "security": {
+            "cookieAuth": []
+          },
+          "parameters": [
+            {
+              "name": "Payload",
+              "in": "body",
+              "required": true,
+              "description": "Predict match payload",
+              "schema": {
+                 "$ref": "#/components/schemas/predictMatchRequest"
+              }
+            }
+         ],
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "New user is created"
+            },
+            "401": {
+                "description": "Authentication failed"
+            },
+            "404": {
+                "description": "No match found for the matchId"
+            },
+            "500": {
+                "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/matches/seasons": {
+        "get": {
+          "tags": [
+            "Matches"
+          ],
+          "description": "Fetch the list of available seasons",
+          "security": {
+            "cookieAuth": []
+          },
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "New user is created"
+            },
+            "401": {
+                "description": "Authentication failed"
+            },
+            "500": {
+                "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/matches/seasons/{season}": {
+        "get": {
+          "tags": [
+            "Matches"
+          ],
+          "description": "Fetch the list of available matches for a season",
+          "security": {
+            "cookieAuth": []
+          },
+          "parameters": [
+            {
+              "name": "season",
+              "in": "path",
+              "required": true,
+              "description": "season for which the matches need to be fetched",
+              "type": "string"
+            }
+         ],
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "New user is created"
+            },
+            "401": {
+                "description": "Authentication failed"
+            },
+            "404": {
+                "description": "No matches found for season"
+            },
+            "500": {
+                "description": "Internal server error"
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "User": {
+        "required": [
+          "username",
+          "password",
+          "first_name",
+          "last_name",
+          "favourite_team"
+        ],
+        "properties": {
+          "username": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "password": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "favourite_team": {
+            "$ref":"#/components/schemas/team_name"
+          }
+        }
+      }
+    },
+    "components": {
+      "securitySchemes": {
+        "cookieAuth": {
+          "type": "apiKey",
+          "in": "cookie",
+          "name": "ipl_user_session"
+        }         
+      },
+      "schemas": {
+        "loginRequest": {
+          "type": "object",
+          "properties": {
+            "username": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            }
+          }
+        },
+        "predictMatchRequest": {
+          "type": "object",
+          "required": [
+            "team1",
+            "team2",
+             "team_to_bat_first",
+             "venue"
+          ],
+          "properties": {
+            "team1": {
+              "$ref":"#/components/schemas/team_name"
+            },
+            "team2": {
+              "$ref":"#/components/schemas/team_name"
+            },
+            "team_to_bat_first": {
+              "$ref":"#/components/schemas/team_name"
+            },
+            "venue": {
+              "type": "string"
+            }
+          }
+        },
+        "team_name": {
+          "type":"string",
+          "enum":[
+            "Sunrisers Hyderabad",
+            "Mumbai Indians",
+            "Gujarat Lions",
+            "Pune Warriors",
+            "Rising Pune Supergiants",
+            "Kolkata Knight Riders",
+            "Delhi Daredevils",
+            "Chennai Super Kings",
+            "Rajasthan Royals",
+            "Deccan Chargers",
+            "Kochi Tuskers Kerala",
+            "Delhi Capitals",
+            "Royal Challengers Bangalore",
+            "Kings XI Punjab"
+          ]
+        }
+      }
+    }
+  }

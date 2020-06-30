@@ -1,0 +1,17 @@
+[{
+    "username": "user03",
+    "email": "user03@gmail.com",
+    "first_name": "Arun",
+    "last_name": "Sanjeevy",
+    "favourite_team": "Delhi Capitals",
+    "user_id": "c9ad7ca1-a860-41ef-9127-7ee28dbad858",
+    "hash": "$2a$10$tz6V1JEj.1zWlvIhr8Xt/uuIUJ7LctRq2YkH9tzgMW8Q0AJf151fC"
+  },{
+    "username": "user05",
+    "email": "user05@gmail.com",
+    "first_name": "Arun",
+    "last_name": "Sanjeevy",
+    "favourite_team": "Delhi Capitals",
+    "user_id": "7b5df692-76a6-4705-9be7-e56e51c013c9",
+    "hash": "$2a$10$J8WYQjKTbRPawOoAjIfRlOGKCs1RnMTHZ.h7iFjkvncVG2QQ.ujWu"
+  }]

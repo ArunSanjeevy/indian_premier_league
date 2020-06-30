@@ -1,0 +1,14 @@
+{
+    "connection_string": "mongodb://localhost:27017/indianPremierLeagueTestDb",
+    "session_options": {
+        "name": "IPLSESSIONID",
+        "keys": ["f2ads2", "lk8jd9"],
+        "cookie": {
+            "maxAge": 3600000
+        }
+    },
+    "log_directory_location": "logs/",
+    "suppress_logs": true,
+    "max_login_attempts": 3,
+    "login_cooldown_period": 3600000
+}
